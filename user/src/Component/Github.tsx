@@ -1,31 +1,26 @@
+import React from 'react';
+import { User } from '../constant/constant';
 
-import React, { useState, useEffect } from 'react';
-import axios from 'axios'
 
-interface User {
-  avatar_url: string;
-  name: string;
-  bio: string;
-  followers: number;
-  following: number;
-  public_repos: number;
+
+interface GithubProps {
+  userData: User | null;
 }
 
-const Github: React.FC = ({userData}) => {
-
+const Github: React.FC<GithubProps> = (props) => {
   return (
     <div>
       <h1>GitHub User Search</h1>
       
-      {userData && (
+      {props.userData && (
         <div className="user-card">
-          <img src={userData.avatar_url} alt="Profile" />
-          <h2>{userData.name}</h2>
-          <p>{userData.bio}</p>
+          <img src={props.userData.avatar_url} alt="Profile" />
+          <h2>{props.userData.name}</h2>
+          <p>{props.userData.bio}</p>
           <div>
-            <p>{userData.followers} Followers</p>
-            <p>{userData.following} Following</p>
-            <p>{userData.public_repos} Repositories</p>
+            <p>{props.userData.followers} Followers</p>
+            <p>{props.userData.following} Following</p>
+            <p>{props.userData.public_repos} Repositories</p>
           </div>
         </div>
       )}

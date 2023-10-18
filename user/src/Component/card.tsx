@@ -1,23 +1,16 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import "./style.css";
 import Github from "./Github";
 import axios from "axios";
+import { User } from "../constant/constant";
 
-interface User {
-  avatar_url: string;
-  name: string;
-  bio: string;
-  followers: number;
-  following: number;
-  public_repos: number;
-}
+
 
 const Card = () => {
   const [username, setUsername] = useState<string>("");
   const [userData, setUserData] = useState<User | null>(null);
 
-  const handleSearch = async (e) => {
-    e.preventDefault(); 
+  const handleSearch = async () => {
 
     try {
       const response = await axios.get(`https://api.github.com/users/${username}`);
@@ -35,14 +28,17 @@ const Card = () => {
 
   return (
     <div className="container">
-      <form>
+      <form onSubmit={(e) => {
+        e.preventDefault();
+        handleSearch()
+      }}>
         <input
           type="text"
           placeholder="Enter a GitHub username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
-        <button onClick={handleSearch}>Search</button>
+        <button type="submit">Search</button>
       </form>
 
       <Github userData={userData} />
